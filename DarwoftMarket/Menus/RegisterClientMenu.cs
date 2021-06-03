@@ -21,23 +21,29 @@ namespace DarwoftMarket.Menus
 
         public static void RegisterClient(int id)
         {
-            Console.WriteLine("-------------------------------------------------------------------------------");
-            Console.WriteLine("Ahora Ingresame Tus datos Personales");
-            Console.WriteLine("ingresa tu nombre:");
-            var name = Console.ReadLine();
-            Console.WriteLine("ingresa tu apellido:");
-            var surname = Console.ReadLine();
-            var ClientExist = ClientDataAccess.GetClient(name, surname);
+            var con = true;
+            while ( con )
+            {
+                Console.WriteLine("-------------------------------------------------------------------------------");
+                Console.WriteLine("Ahora Ingresame Tus datos Personales");
+                Console.WriteLine("ingresa tu nombre:");
+                var name = Console.ReadLine();
+                Console.WriteLine("ingresa tu apellido:");
+                var surname = Console.ReadLine();
+                var ClientExist = ClientDataAccess.GetClient(name, surname);
+
+                if (ClientExist.Rows.Count <= 0)
+                {
+                    ClientDataAccess.InsertClint(id, name, surname);
+
+                }
+                else
+                {
+                    con = false;
+                }
+
+            }
             
-            if (ClientExist.Rows.Count <= 0)
-            {
-                ClientDataAccess.InsertClint(id, name, surname);
- 
-            }
-            else
-            {
-                RegisterClient(id);
-            }
         }
 
         public static void RegisterUserView()

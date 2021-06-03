@@ -10,7 +10,6 @@ namespace DarwoftMarket.Menus
         
         public static  void showMenus( int id , int idTypeUser )
         {
-
             if (idTypeUser == 1)
             {
                 ClientMenu();
@@ -22,17 +21,17 @@ namespace DarwoftMarket.Menus
             else if (idTypeUser == 3)
             {
                 BossMenu();
-
             }
             else
             {
                 Console.WriteLine("Esto no deberia pasar ");
             }
         }
+
         public static void ClientMenu()
         {
-            bool Run = true;
-            while (Run)
+            var con = true;
+            while ( con )
             {
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
@@ -51,21 +50,16 @@ namespace DarwoftMarket.Menus
                         // code block
                         break;
                     case 3:
-                        // code block
-                        break;
-
-                    default:
-                        ClientMenu();
+                        con = false;
                         break;
                 }
-
             }
         }
 
         public static void BossMenu()
         {
-            bool Run = true;
-            while (Run)
+            var con = true;
+            while ( con )
             {
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
@@ -84,20 +78,15 @@ namespace DarwoftMarket.Menus
                         // code block
                         break;
                     case 3:
-                        // code block
-                        break;
-
-                    default:
-                        BossMenu();
+                        con = false;
                         break;
                 }
-
             }
         }
         public static  void EmployeeMenu()
         {
-            bool Run = true;
-            while (Run)
+            var con = true;
+            while (con)
             {
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
@@ -116,14 +105,9 @@ namespace DarwoftMarket.Menus
                         // code block
                         break;
                     case 3:
-                        // code block
-                        break;
-
-                    default:
-                        EmployeeMenu();
+                        con = false;
                         break;
                 }
-
             }
         }
     }
