@@ -9,6 +9,7 @@ namespace DarwoftMarket.DataAccess
 {
     public static class ProductDataAccess
     {
+    
         public static void InsertProduct(string name, int quantity, string description = "NOT DESCRIBED ")
         {
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
@@ -37,7 +38,6 @@ namespace DarwoftMarket.DataAccess
                 Console.WriteLine("Hubo un problema al cargar el Producto");
                 throw;
             }
-
             finally
             {
                 cn.Close();

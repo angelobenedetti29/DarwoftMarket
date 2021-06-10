@@ -21,8 +21,9 @@ namespace DarwoftMarket.Menus
                 Console.Clear();
                 if (opc == "s")
                 {
-                    RegisterClientMenu.RegisterUserView();
+                    ClientDataAccess.CreateClint();
                     con = false;
+                    ShowLogin();
                 }
                 else if (opc == "n")
                 {
@@ -62,7 +63,7 @@ namespace DarwoftMarket.Menus
 
                 if (userTable.Rows.Count == 1)
                 {
-                    Menu.showMenus(Convert.ToInt32(userTable.Rows[0][0]), Convert.ToInt32(userTable.Rows[0][3]));
+                    Menu.showMenus(userTable);
                     con = false;
                 }
                 else

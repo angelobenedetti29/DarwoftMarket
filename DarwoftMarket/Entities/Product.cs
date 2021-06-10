@@ -16,7 +16,6 @@ namespace DarwoftMarket.Entities
             this.Name = name;
             this.Description = description;
             this.Quantity = quantity;
-
         }
 
         

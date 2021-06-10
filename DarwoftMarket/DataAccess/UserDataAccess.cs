@@ -6,11 +6,12 @@ using System.Text;
 using System.Configuration;
 using System.Data;
 
+
 namespace DarwoftMarket.DataAccess
 { 
     public static class UserDataAccess
     {
-
+      
         public static bool GetUsername(string username)
         {
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
@@ -30,13 +31,21 @@ namespace DarwoftMarket.DataAccess
 
                 cn.Open();
                 cmd.Connection = cn;
-                cmd.ExecuteNonQuery();
-                result = true;
+                var table = new DataTable();
+
+                var da = new SqlDataAdapter(cmd);
+                da.Fill(table);
+
+                if(table.Rows.Count == 1)
+                {
+                    result = true;
+                }
+               
                 return result;
 
             }
             catch (Exception)
-            { 
+            {
                 throw;
             }
 
@@ -53,7 +62,7 @@ namespace DarwoftMarket.DataAccess
 
             try
             {
-               
+
                 var cmd = new SqlCommand();
                 string query = "SELECT * FROM Users WHERE username like @username AND password like @password";
 
