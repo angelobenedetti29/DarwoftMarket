@@ -36,13 +36,14 @@ namespace DarwoftMarket.Menus
 
         public static void ClientLobby(DataTable instanceUserTable)
         {
-            var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
-            var name = instanceUserTable.Rows[0][1];
             var con = true;
             while ( con )
             {
-                instanceUserTable = ClientDataAccess.GetClient("", "", id);
+                var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
+                var name = instanceUserTable.Rows[0][1];
 
+                instanceUserTable = ClientDataAccess.GetClient("", "", id);
+                
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");

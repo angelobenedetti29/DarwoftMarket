@@ -120,7 +120,7 @@ namespace DarwoftMarket.DataAccess
                 cmd.Connection = cn;
                 cmd.ExecuteNonQuery();
                
-                string query2 = "SELECT * FROM Users WHERE username like @username AND password like @password";
+                string query2 = "SELECT id FROM Users WHERE username like @username AND password like @password";
 
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@username", username);
