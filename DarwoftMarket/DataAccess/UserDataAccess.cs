@@ -62,7 +62,6 @@ namespace DarwoftMarket.DataAccess
 
             try
             {
-
                 var cmd = new SqlCommand();
                 string query = "SELECT * FROM Users WHERE username like @username AND password like @password";
 
