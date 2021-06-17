@@ -13,7 +13,7 @@ namespace DarwoftMarket.Entities
 
         public string Name { get; set; }
         public string Surname { get; set; }
-        public int Boss { get; set; }
+        public int idBoss { get; set; }
 
 
         public Employee(int ID , string name, string surname, int boss )
@@ -21,7 +21,7 @@ namespace DarwoftMarket.Entities
             this.ID = ID;
             this.Name = name;
             this.Surname = surname;
-            this.Boss = boss;
+            this.idBoss = boss;
             
         }
         

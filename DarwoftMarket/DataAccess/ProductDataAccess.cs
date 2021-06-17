@@ -43,5 +43,44 @@ namespace DarwoftMarket.DataAccess
                 cn.Close();
             }
         }
+
+        public static DataTable GetProducts()
+        {
+            string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
+            var cn = new SqlConnection(connectionLink);
+
+            try
+            {
+
+                var cmd = new SqlCommand();
+
+                string query = "SELECT * FROM  Products ";
+
+                cmd.Parameters.Clear();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+
+                cn.Open();
+                cmd.Connection = cn;
+                var table = new DataTable();
+
+                var da = new SqlDataAdapter(cmd);
+                da.Fill(table);
+
+                return table;
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Hubo un problema al obtener un Producto");
+                throw;
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+
     }
 }

@@ -92,7 +92,7 @@ namespace DarwoftMarket.DataAccess
             
             var username = userArray[0];
             var password = userArray[1];
-            var idTypeUser = userArray[2];
+            var idTypeUser = 0 ;
            
             var name = clientArray[0]; 
             var surname = clientArray[1];

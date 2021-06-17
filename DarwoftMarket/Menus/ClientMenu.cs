@@ -12,7 +12,7 @@ namespace DarwoftMarket.Menus
     {
         public static Array RegisterClient()
         {
-            var clientArray = new string[3];
+            var clientArray = new string[2];
             var con = true;
             while ( con )
             {
@@ -29,7 +29,6 @@ namespace DarwoftMarket.Menus
 
                     clientArray[0] = name;
                     clientArray[1] = surname;
-                    clientArray[2] = "0";
                     con = false;
                 }
                 else

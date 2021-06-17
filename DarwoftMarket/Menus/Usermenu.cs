@@ -18,7 +18,7 @@ namespace DarwoftMarket.Menus
             {
 
                 Console.WriteLine("-------------------------------------------------------------------------------");
-                Console.WriteLine("Ya que sos nuevo ! Nos registramos\n");
+                Console.WriteLine("                         Menu para registrar un Usario\n");
                 Console.WriteLine("La contraseña debe tener al menos:\n" +
                                   "-una mayuscula\n" +
                                   "-una minscula\n" +

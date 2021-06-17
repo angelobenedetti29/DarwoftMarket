@@ -12,38 +12,36 @@ namespace DarwoftMarket.Menus
         
         public static  void showMenus( DataTable userTable )
         {
-            var id = Convert.ToInt32(userTable.Rows[0][0]);
+            var idUser = Convert.ToInt32(userTable.Rows[0][0]);
             var idTypeUser = Convert.ToInt32(userTable.Rows[0][3]);
-            DataTable instanceUserTable = ClientDataAccess.GetClient("", "", id);
            
             if (idTypeUser == 1)
             {
-                ClientLobby( instanceUserTable );
+                ClientLobby(idUser);
             }
             else if (idTypeUser == 2)
             {
-                EmployeeMenu( instanceUserTable );
+                EmployeeMenu(idUser);
             }
             else if (idTypeUser == 3)
             {
-                BossMenu( instanceUserTable );
+                BossMenu(idUser);
             }
             else
             {
-                Console.WriteLine("Esto no deberia pasar ");
+                Console.WriteLine("Esto no deberia pasar");
             }
         }
 
-        public static void ClientLobby(DataTable instanceUserTable)
+        public static void ClientLobby(int idUser)
         {
             var con = true;
             while ( con )
             {
+                var instanceUserTable = ClientDataAccess.GetClient("", "", idUser);
                 var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
                 var name = instanceUserTable.Rows[0][1];
 
-                instanceUserTable = ClientDataAccess.GetClient("", "", id);
-                
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
@@ -75,8 +73,10 @@ namespace DarwoftMarket.Menus
             }
         }
 
-        public static void BossMenu( DataTable instanceUserTable )
+        public static void BossMenu(int idUser)
         {
+            var instanceUserTable = BossDataAccess.GetBoss("", "", idUser);
+            var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
             var name = instanceUserTable.Rows[0][1];
             var con = true;
             while ( con )
@@ -84,7 +84,7 @@ namespace DarwoftMarket.Menus
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
-                Console.WriteLine("1-Comprar");
+                Console.WriteLine("1-Crear Empleado");
                 Console.WriteLine("2-Revisar saldo");
                 Console.WriteLine("3-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
@@ -92,7 +92,7 @@ namespace DarwoftMarket.Menus
                 switch (option)
                 {
                     case 1:
-                        // code block
+                        EmployeeDataAccess.CreateEmployee(id);
                         break;
                     case 2:
                         // code block
@@ -103,8 +103,10 @@ namespace DarwoftMarket.Menus
                 }
             }
         }
-        public static  void EmployeeMenu( DataTable instanceUserTable )
+        public static  void EmployeeMenu(int idUser)
         {
+            var instanceUserTable = EmployeeDataAccess.GetEmployee("", "", idUser);
+            var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
             var name = instanceUserTable.Rows[0][1];
             var con = true;
             while (con)
