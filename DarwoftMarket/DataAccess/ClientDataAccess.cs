@@ -92,11 +92,11 @@ namespace DarwoftMarket.DataAccess
             
             var username = userArray[0];
             var password = userArray[1];
-            var idTypeUser = 0 ;
+            var idTypeUser = 1 ;
            
             var name = clientArray[0]; 
             var surname = clientArray[1];
-            var amount = clientArray[2];
+            var amount = 0; 
 
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
             var cn = new SqlConnection(connectionLink);
@@ -151,6 +151,53 @@ namespace DarwoftMarket.DataAccess
             {
                 objTransaction.Rollback();
                 Console.WriteLine($"Hubo un problema al cargar el Cliente...\n ERROR: {ex}");
+                throw;
+            }
+
+            finally
+            {
+                cn.Close();
+            }
+        }
+
+        public static void DeleteClint(int idUser)
+        {
+          
+            string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
+            var cn = new SqlConnection(connectionLink);
+            SqlTransaction objTransaction = null;
+
+            try
+            {
+
+                var cmd = new SqlCommand();
+                string query2 = "DELETE FROM  Clients WHERE id = @id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", idUser);
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query2;
+                
+
+
+                cn.Open();
+                objTransaction = cn.BeginTransaction("DeleteClient");
+                cmd.Transaction = objTransaction;
+                cmd.Connection = cn;
+                cmd.ExecuteNonQuery();
+
+                string query1 = " DELETE FROM  Users WHERE id = @id ";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", idUser);
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query1;
+                cmd.ExecuteNonQuery();
+                objTransaction.Commit();
+               
+            }
+            catch (Exception ex)
+            {
+                objTransaction.Rollback();
+                Console.WriteLine($"Hubo un problema al Borrar al Cliente...\n ERROR: {ex}");
                 throw;
             }
 

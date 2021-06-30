@@ -21,11 +21,11 @@ namespace DarwoftMarket.Menus
             }
             else if (idTypeUser == 2)
             {
-                EmployeeMenu(idUser);
+                EmployeeLobby(idUser);
             }
             else if (idTypeUser == 3)
             {
-                BossMenu(idUser);
+                BossLobby(idUser);
             }
             else
             {
@@ -48,13 +48,15 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("1-Comprar");
                 Console.WriteLine("2-Revisar saldo");
                 Console.WriteLine("3-Cargar saldo");
-                Console.WriteLine("4-Salir\n\n\n");
+                Console.WriteLine("4-Eliminar mi cuenta");
+                Console.WriteLine("5-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
                     case 1:
-                        // code block
+                        Console.Clear();
+                        ProductMenu.BuyProducts();
                         break;
                     case 2:
                         Console.Clear();
@@ -67,13 +69,25 @@ namespace DarwoftMarket.Menus
    
                         break;
                     case 4:
+                        Console.WriteLine("Seguro que quieres eliminar tu cuenta  ?");
+                        var opc =Console.ReadLine();
+                        if (opc == "S" || opc == "s")
+                        {
+                            ClientDataAccess.DeleteClint(idUser);
+                            Console.WriteLine("El cliente fue dado de baja con exito");
+                            Console.ReadLine();
+                            Environment.Exit(0);
+                        }
+                        break;
+                    case 5:
+
                         con = false;
                         break;
                 }
             }
         }
 
-        public static void BossMenu(int idUser)
+        public static void BossLobby(int idUser)
         {
             var instanceUserTable = BossDataAccess.GetBoss("", "", idUser);
             var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
@@ -103,7 +117,7 @@ namespace DarwoftMarket.Menus
                 }
             }
         }
-        public static  void EmployeeMenu(int idUser)
+        public static  void EmployeeLobby(int idUser)
         {
             var instanceUserTable = EmployeeDataAccess.GetEmployee("", "", idUser);
             var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
@@ -116,18 +130,22 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
                 Console.WriteLine("1-CargarProducto");
                 Console.WriteLine("2-ConsultarProductos");
-                Console.WriteLine("3-Salir\n\n\n");
+                Console.WriteLine("3-ActualizarStock");
+                Console.WriteLine("4-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
                     case 1:
-                        // code block
+                        EmployeeMenu.CreateProduct();
                         break;
                     case 2:
-                        // code block
+                        ProductMenu.ShowProdcuts();
                         break;
                     case 3:
+                        ProductMenu.UpdateQuantity();
+                        break;
+                    case 4:
                         con = false;
                         break;
                 }
