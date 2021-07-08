@@ -1,5 +1,6 @@
 ﻿using DarwoftMarket.DataAccess;
 using DarwoftMarket.Entities;
+using DarwoftMarket.ProjectUtilities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,7 +40,6 @@ namespace DarwoftMarket.Menus
             while ( con )
             {
                 var instanceUserTable = ClientDataAccess.GetClient("", "", idUser);
-                var id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
                 var name = instanceUserTable.Rows[0][1];
 
                 Console.Clear();
@@ -51,12 +51,12 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("4-Eliminar mi cuenta");
                 Console.WriteLine("5-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
-                int option = int.Parse(Console.ReadLine());
+                int option = ValidatesConsole.ValidateInputInt() ;
                 switch (option)
                 {
                     case 1:
                         Console.Clear();
-                        ProductMenu.BuyProducts();
+                        ProductMenu.BuyProducts(idUser);
                         break;
                     case 2:
                         Console.Clear();
@@ -69,15 +69,7 @@ namespace DarwoftMarket.Menus
    
                         break;
                     case 4:
-                        Console.WriteLine("Seguro que quieres eliminar tu cuenta  ?");
-                        var opc =Console.ReadLine();
-                        if (opc == "S" || opc == "s")
-                        {
-                            ClientDataAccess.DeleteClint(idUser);
-                            Console.WriteLine("El cliente fue dado de baja con exito");
-                            Console.ReadLine();
-                            Environment.Exit(0);
-                        }
+                        ClientMenu.DeleteClientMenu(idUser); 
                         break;
                     case 5:
 
@@ -99,10 +91,10 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
                 Console.WriteLine("1-Crear Empleado");
-                Console.WriteLine("2-Revisar saldo");
+                Console.WriteLine("");
                 Console.WriteLine("3-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
-                int option = int.Parse(Console.ReadLine());
+                int option = ValidatesConsole.ValidateInputInt();
                 switch (option)
                 {
                     case 1:
@@ -133,7 +125,7 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("3-ActualizarStock");
                 Console.WriteLine("4-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
-                int option = int.Parse(Console.ReadLine());
+                int option = ValidatesConsole.ValidateInputInt();
                 switch (option)
                 {
                     case 1:

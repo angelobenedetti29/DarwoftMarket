@@ -10,7 +10,7 @@ namespace DarwoftMarket.DataAccess
     public static class ProductDataAccess
     {
     
-        public static void InsertProduct(string name, int quantity, string description = "NOT DESCRIBED ")
+        public static void InsertProduct(string name, int quantity, float price, string description = "NOT DESCRIBED ")
         {
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
             var cn = new SqlConnection(connectionLink);
@@ -20,12 +20,13 @@ namespace DarwoftMarket.DataAccess
 
                 var cmd = new SqlCommand();
 
-                string query = "INSERT INTO Products (name, description, quantity) VALUES (@name, @description, @quantity) ";
+                string query = "INSERT INTO Products (name, description, quantity, price) VALUES (@name, @description, @quantity, @price) ";
 
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@name", name); 
                 cmd.Parameters.AddWithValue("@description", description);
                 cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@price", price);
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = query;
 
@@ -88,7 +89,7 @@ namespace DarwoftMarket.DataAccess
             }
         }
 
-        public static DataTable GetProduct(string name)
+        public static DataTable GetProduct(string name , int id = -1)
         {
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
             var cn = new SqlConnection(connectionLink);
@@ -98,9 +99,10 @@ namespace DarwoftMarket.DataAccess
 
                 var cmd = new SqlCommand();
 
-                string query = "SELECT * FROM  Products  WHERE name = @name";
+                string query = "SELECT * FROM  Products  WHERE name = @name or id = @id";
 
                 cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = query;

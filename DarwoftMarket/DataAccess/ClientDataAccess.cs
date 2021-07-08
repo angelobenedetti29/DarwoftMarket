@@ -43,6 +43,39 @@ namespace DarwoftMarket.DataAccess
                 cn.Close();
             }
         }
+        public static float GetAmount(int id)
+        {
+            string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
+            var cn = new SqlConnection(connectionLink);
+
+            try
+            {
+
+                var cmd = new SqlCommand();
+                string query = "SELECT amount FROM Clients WHERE  id like @id";
+
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = query;
+
+                cn.Open();
+                cmd.Connection = cn;
+                var amount = (float)((double)cmd.ExecuteScalar());
+                return amount;
+
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            finally
+            {
+                cn.Close();
+            }
+        }
 
         public static DataTable GetClient(string name = "", string surname = "", int id = -1 )
         {
@@ -206,6 +239,7 @@ namespace DarwoftMarket.DataAccess
                 cn.Close();
             }
         }
+        
     }
 
 }

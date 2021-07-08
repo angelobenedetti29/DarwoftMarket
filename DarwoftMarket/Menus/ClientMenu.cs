@@ -19,9 +19,9 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("-------------------------------------------------------------------------------");
                 Console.WriteLine("Ahora Ingresame Tus datos Personales");
                 Console.WriteLine("ingresa tu nombre:");
-                var name = Console.ReadLine();
+                var name = ValidatesConsole.ValidateInputString();
                 Console.WriteLine("ingresa tu apellido:");
-                var surname = Console.ReadLine();
+                var surname = ValidatesConsole.ValidateInputString() ;
                 var ClientExist = ClientDataAccess.GetClient(name, surname);
 
                 if (ClientExist.Rows.Count <= 0)
@@ -44,15 +44,16 @@ namespace DarwoftMarket.Menus
         public static void InsertAmountMenu(DataTable instanceUserTable)
         {
             int id = Convert.ToInt32(instanceUserTable.Rows[0][0]);
-            float amount = Convert.ToInt32(instanceUserTable.Rows[0][3]);
+            float amount = (float)((double)(instanceUserTable.Rows[0][3]));
             bool con = true;
             while (con)
             {
+                Console.Clear();
                 Console.WriteLine("-------------------------------------------------------------------------------");
                 Console.WriteLine("Pantalla de recarga de saldo!\n");
                 Console.WriteLine($"Tu saldo actual es : {amount} Pesos\n");
-                Console.WriteLine("Ingresar el monto a cargar:\n");
-                float quantity = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Ingresar el monto a cargar:");
+                float quantity = ValidatesConsole.ValidateInputFloat();
                 quantity = amount + quantity;
                 if (quantity > 0) ;
                 {
@@ -64,6 +65,31 @@ namespace DarwoftMarket.Menus
             }
 
         }
+        public static void DeleteClientMenu(int idClient)
+        {
+            Console.Clear();
+            Console.WriteLine("Seguro que quieres eliminar tu cuenta  ?");
+            var opc = ValidatesConsole.ValidateInputString();
+           
+            if (opc == "S" || opc == "s")
+            {
+                var tableClient = UserDataAccess.GetUser("", "", idClient);
+                Console.WriteLine("Ingresar su contraseña para eliminar la cuenta:");
+                var password = ValidatesConsole.ValidateInputString();
+                if (tableClient.Rows[0][2].ToString() == password)
+                {
+                    ClientDataAccess.DeleteClint(idClient);
+                    Console.WriteLine("El cliente fue dado de baja con exito");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("La constraseña ingresada es incorrecta");
+                }
+            }
+        }
+
 
     }
 } 

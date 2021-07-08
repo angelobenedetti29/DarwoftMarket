@@ -55,7 +55,7 @@ namespace DarwoftMarket.DataAccess
             }
         }
 
-        public static DataTable GetUser(string username, string password)
+        public static DataTable GetUser(string username, string password , int id = -1)
         {
             string connectionLink = ConfigurationManager.AppSettings["connectionLink"];
             var cn = new SqlConnection(connectionLink);
@@ -63,11 +63,12 @@ namespace DarwoftMarket.DataAccess
             try
             {
                 var cmd = new SqlCommand();
-                string query = "SELECT * FROM Users WHERE username like @username AND password like @password";
+                string query = "SELECT * FROM Users WHERE username like @username AND password like @password OR id =  @id";
 
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@username",username);
                 cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@id", id);
                 cmd.CommandType = CommandType.Text;
                 cmd.CommandText = query;
 

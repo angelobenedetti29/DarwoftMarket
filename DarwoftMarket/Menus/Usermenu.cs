@@ -26,11 +26,11 @@ namespace DarwoftMarket.Menus
                                   "-un caracter\n");
 
                 Console.WriteLine("Ingresa un Usario:");
-                var username = Console.ReadLine();
+                var username = ValidatesConsole.ValidateInputString();
                 Console.WriteLine("Ingresa una Contraseña:");
-                var password = Console.ReadLine();
+                var password = ValidatesConsole.ValidateInputString();
                 Console.WriteLine("Ingresala Nuevamente :");
-                var password2 = Console.ReadLine();
+                var password2 = ValidatesConsole.ValidateInputString();
                 Console.Clear();
 
                 if (UserDataAccess.GetUsername(username) == false && password == password2 && ValidatesConsole.IsValidPassword(password))

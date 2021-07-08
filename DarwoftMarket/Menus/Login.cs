@@ -16,7 +16,7 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("--------------------");
                 Console.WriteLine("        Login       ");
                 Console.WriteLine("Sos nuevo ? (s/n)");
-                var opc = Console.ReadLine();
+                var opc = ValidatesConsole.ValidateInputString();
                 opc = opc.ToLower();
                 Console.Clear();
                 if (opc == "s")
@@ -47,9 +47,9 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("--------------------");
                 Console.WriteLine("        Login       ");
                 Console.WriteLine("ingresar usario:");
-                var username = Console.ReadLine();
+                var username = ValidatesConsole.ValidateInputString();
                 Console.WriteLine("ingresar Contraseña:");
-                var password = Console.ReadLine();
+                var password = ValidatesConsole.ValidateInputString() ;
                 var userTable = new DataTable();
 
                 try

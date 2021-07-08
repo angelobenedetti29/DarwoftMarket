@@ -10,12 +10,14 @@ namespace DarwoftMarket.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
-        public Product(int ID, string name, string description, int quantity)
+        public float Price { get; set; }
+        public Product(int ID, string name, string description, int quantity, float price)
         {
             this.ID = ID;
             this.Name = name;
             this.Description = description;
             this.Quantity = quantity;
+            this.Price = price;
         }
 
         

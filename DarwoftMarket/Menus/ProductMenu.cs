@@ -1,4 +1,5 @@
 ﻿using DarwoftMarket.DataAccess;
+using DarwoftMarket.ProjectUtilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,14 +19,14 @@ namespace DarwoftMarket.Menus
             if (opc == "S" || opc == "s")
             {
                 Console.WriteLine("Ingresa el nombre del producto:");
-                var name = Console.ReadLine().Trim();
+                var name = ValidatesConsole.ValidateInputString();
                 bool isIn = false;
                 for (int i = 0; i < productsTable.Rows.Count; i++)
                 {
                     
                     if (name == productsTable.Rows[i][1].ToString())
                     {
-                        Console.WriteLine($"CODIGO:{productsTable.Rows[i][0]}   NOMBRE:{productsTable.Rows[i][1]}   CANTIDAD:{productsTable.Rows[i][3]}");
+                        Console.WriteLine($"CODIGO:{productsTable.Rows[i][0]}   NOMBRE:{productsTable.Rows[i][1]}   CANTIDAD:{productsTable.Rows[i][3]} PRECIO:{productsTable.Rows[i][4]}");
                         isIn = true;
                         Console.ReadLine();
                     }
@@ -45,46 +46,94 @@ namespace DarwoftMarket.Menus
         }
         public static void UpdateQuantity()
         {
+            Console.Clear();
             Console.WriteLine("--------------------------------------------------");
             Console.WriteLine("                   Productos Disponibles          ");
             Console.WriteLine("ingresar cuantos productos hay que modificar:");
-            var quantityProducts = Console.ReadLine();
-            for (int n = 0; n < int.Parse(quantityProducts); n++)
+            var quantityProducts = ValidatesConsole.ValidateInputInt();
+            for (int n = 0; n < quantityProducts ; n++)
             {
                 Console.Clear();
-                var productsTable = ProductDataAccess.GetProducts();
                 ShowListProducts();
                 Console.WriteLine("Ingresa el CODIGO del Producto a modificar:");
-                var id = int.Parse(Console.ReadLine().Trim());
+                var id = ValidatesConsole.ValidateInputInt() ;
                 Console.WriteLine("Ingresar cuanto se agrego:");
-                var quantity = int.Parse(Console.ReadLine().Trim());
+                var quantity = ValidatesConsole.ValidateInputInt();
                 // type is equal to 0 because the query needs to increment the stock
                 ProductDataAccess.UpdateProduct(id, quantity , 0);
             } 
         }
 
-        public static void BuyProducts()
+        public static void BuyProducts(int idClient)
         {
             
             Console.WriteLine("--------------------------------------------------");
             Console.WriteLine("                   Lista De Productos          ");
             ShowListProducts(1);
             Console.WriteLine("Ingresar la cantidad de prodcutos que desea comprar:");
-            var quantityProducts = int.Parse(Console.ReadLine().Trim());
-            for (int i = 0; i < quantityProducts; i++)
+            float amount = ClientDataAccess.GetAmount(idClient);
+            var end = false;
+            var discountsTable = DiscountDataAccess.GetDiscounts();
+            var discount1 = discountsTable.Rows[0];
+            var discount2 = discountsTable.Rows[1];
+           
+            while (end  == false)
             {
-                Console.Clear();
+                Console.Clear(); 
                 Console.WriteLine("--------------------------------------------------");
                 Console.WriteLine("                   Lista De Productos          ");
                 ShowListProducts(1);
+                
                 Console.WriteLine("Ingresa el CODIGO del Producto a comprar:");
-                var id = int.Parse(Console.ReadLine().Trim());
+                int idProduct = ValidatesConsole.ValidateInputInt();
                 Console.WriteLine("Ingresar cantidad:");
-                var quantity = int.Parse(Console.ReadLine().Trim());
-                // type is equal to 0 because the query needs to increment the stock
-                ProductDataAccess.UpdateProduct(id, quantity, 1);
+                var quantity = ValidatesConsole.ValidateInputInt();
+
+                var product = ProductDataAccess.GetProduct("",idProduct);
+                amount = ClientDataAccess.GetAmount(idClient);
+                var priceProdcut = (float)((double)(product.Rows[0][4]));
+                priceProdcut = priceProdcut * quantity ;
+                var quantityProduct = (int)(product.Rows[0][3]);
+
+                if (quantity == 2) 
+                {
+                    amount = amount - (priceProdcut - (priceProdcut *  (float)((double)discount1[3]))); 
+                }
+                if (quantity == 3)
+                {
+                    amount = amount - (priceProdcut - (priceProdcut * (float)((double)discount2[3])));
+                }
+
+
+
+                if ( quantityProduct >= 0 && amount >= 0)
+                {
+                    // type is equal to 0 because the query needs to increment the stock
+                    ProductDataAccess.UpdateProduct(idProduct, quantity, 1);
+                    ClientDataAccess.UpdateAmount(idClient,amount);
+                }
+                else
+                {
+                    if (amount < priceProdcut )
+                    {
+                        Console.WriteLine("No tenes saldo Suficiente para realizar una compra\n");
+                    }
+                    if (quantityProduct < quantity)
+                    {
+                        Console.WriteLine("No queda mas prodcutos en Stock\n");
+                    }
+                    
+                }
+
+                Console.WriteLine("queres comprar otro producto?(s/n)");
+                var opc = ValidatesConsole.ValidateInputString();
+                if (opc == "N" || opc == "n")
+                {
+                    end = true;
+                }
+                
             }
-            
+           
         }
         public static void ShowListProducts(int type = 0)
         {
@@ -93,7 +142,7 @@ namespace DarwoftMarket.Menus
             Console.WriteLine("                   Productos Disponibles          ");
             for (int i = 0; i < productsTable.Rows.Count; i++)
             {
-                Console.WriteLine($"CODIGO:{productsTable.Rows[i][0]}   NOMBRE:{productsTable.Rows[i][1]}   CANTIDAD:{productsTable.Rows[i][3]}");
+                Console.WriteLine($"CODIGO:{productsTable.Rows[i][0]}   NOMBRE:{productsTable.Rows[i][1]}   CANTIDAD:{productsTable.Rows[i][3]}   PRECIO:{productsTable.Rows[i][4]}");
             }
             Console.ReadLine();
         }

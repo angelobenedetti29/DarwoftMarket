@@ -1,4 +1,5 @@
 ﻿using DarwoftMarket.DataAccess;
+using DarwoftMarket.ProjectUtilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,7 @@ namespace DarwoftMarket.Menus
     {
         public static void CreateProduct()
         {
+            Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("              Carga de Prodcutos");
             Console.WriteLine("ingresar la cantidad de productos a cargar:");
@@ -18,16 +20,18 @@ namespace DarwoftMarket.Menus
             {
                 Console.Clear();
                 Console.WriteLine("--------------------------------------------");
-                Console.WriteLine("              Carga de Prodcutos\n\n");
+                Console.WriteLine("              Carga de Prodcutos\n");
                 Console.WriteLine("nombre:");
-                var name = Console.ReadLine();
+                var name = ValidatesConsole.ValidateInputString() ;
                 Console.WriteLine("Description:");
-                var description = Console.ReadLine();
+                var description = ValidatesConsole.ValidateInputString();
                 Console.WriteLine("Cantidad inicial:");
-                var quantity = Console.ReadLine();
+                int quantity = ValidatesConsole.ValidateInputInt();
+                Console.WriteLine("Precio inicial:");
+                float price = ValidatesConsole.ValidateInputFloat();
                 if (ProductDataAccess.GetProduct(name).Rows.Count == 0)
                 {
-                    ProductDataAccess.InsertProduct(name, int.Parse(quantity), description);
+                    ProductDataAccess.InsertProduct(name, quantity, price, description);
                     Console.WriteLine("El prodcuto fue cargado  con exito");
                     Console.Clear();
                 }
