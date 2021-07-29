@@ -10,7 +10,7 @@ namespace DarwoftMarket.Entities
         public string Password { get; set; }
         public int ID { get; set; }
         public int idTypeUser { get; set; }
-
+            
         public User()
         {
 

@@ -45,11 +45,12 @@ namespace DarwoftMarket.Menus
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
-                Console.WriteLine("1-Comprar");
-                Console.WriteLine("2-Revisar saldo");
-                Console.WriteLine("3-Cargar saldo");
-                Console.WriteLine("4-Eliminar mi cuenta");
-                Console.WriteLine("5-Salir\n\n\n");
+                Console.WriteLine("1-Comprar sin ticket");
+                Console.WriteLine("2-Comprar con ticket y por lote");
+                Console.WriteLine("3-Revisar saldo");
+                Console.WriteLine("4-Cargar saldo");
+                Console.WriteLine("5-Eliminar mi cuenta");
+                Console.WriteLine("6-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
                 int option = ValidatesConsole.ValidateInputInt() ;
                 switch (option)
@@ -60,19 +61,21 @@ namespace DarwoftMarket.Menus
                         break;
                     case 2:
                         Console.Clear();
+                        ProductMenu.BuyProductsWichTicket(idUser);
+                        break;
+                    case 3:
+                        Console.Clear();
                         Console.WriteLine("-------------------------------------------------------------------------------");
                         Console.WriteLine($"Tu saldo actual es: {Convert.ToInt32(instanceUserTable.Rows[0][3])} pesos");
                         Console.ReadLine();
                         break;
-                    case 3:
-                        ClientMenu.InsertAmountMenu(instanceUserTable);
-   
-                        break;
                     case 4:
-                        ClientMenu.DeleteClientMenu(idUser); 
+                        ClientMenu.InsertAmountMenu(instanceUserTable);
                         break;
                     case 5:
-
+                        ClientMenu.DeleteClientMenu(idUser); 
+                        break;
+                    case 6:
                         con = false;
                         break;
                 }
@@ -91,8 +94,13 @@ namespace DarwoftMarket.Menus
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
                 Console.WriteLine("1-Crear Empleado");
-                Console.WriteLine("");
-                Console.WriteLine("3-Salir\n\n\n");
+                Console.WriteLine("2-Crear producto");
+                Console.WriteLine("3-Modificar productos");
+                Console.WriteLine("4-Eliminar producto");
+                Console.WriteLine("5-Crear descuento");
+                Console.WriteLine("6-Modificar descuento");
+                Console.WriteLine("7-Eliminar descuento");
+                Console.WriteLine("8-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
                 int option = ValidatesConsole.ValidateInputInt();
                 switch (option)
@@ -101,9 +109,24 @@ namespace DarwoftMarket.Menus
                         EmployeeDataAccess.CreateEmployee(id);
                         break;
                     case 2:
-                        // code block
+                        ProductMenu.CreateProduct();
                         break;
                     case 3:
+                        ProductMenu.UpdateProduct();
+                        break;
+                    case 4:
+                        ProductMenu.DeleteProduct();
+                        break;
+                    case 5:
+                        DiscountMenu.CreateDiscountMenu();
+                        break;
+                    case 6:
+                        DiscountMenu.UpdateDiscount();
+                        break;
+                    case 7:
+                        DiscountMenu.DeleteDiscount();
+                        break;
+                    case 8:
                         con = false;
                         break;
                 }
@@ -120,16 +143,17 @@ namespace DarwoftMarket.Menus
                 Console.Clear();
                 Console.WriteLine("----DARWOFT MARKET----");
                 Console.WriteLine($"Bien venido {name}!!!\n\n\n");
-                Console.WriteLine("1-CargarProducto");
-                Console.WriteLine("2-ConsultarProductos");
+                Console.WriteLine("1-Cargar Producto");
+                Console.WriteLine("2-Consultar Productos");
                 Console.WriteLine("3-ActualizarStock");
-                Console.WriteLine("4-Salir\n\n\n");
+                Console.WriteLine("4-Consultar Productos Faltantes");
+                Console.WriteLine("5-Salir\n\n\n");
                 Console.WriteLine("Ingresa Una Opcion:");
                 int option = ValidatesConsole.ValidateInputInt();
                 switch (option)
                 {
                     case 1:
-                        EmployeeMenu.CreateProduct();
+                        ProductMenu.CreateProduct();
                         break;
                     case 2:
                         ProductMenu.ShowProdcuts();
@@ -138,6 +162,9 @@ namespace DarwoftMarket.Menus
                         ProductMenu.UpdateQuantity();
                         break;
                     case 4:
+                        ProductMenu.ShowListProducts(2);
+                        break;
+                    case 5:
                         con = false;
                         break;
                 }

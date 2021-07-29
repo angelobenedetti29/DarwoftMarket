@@ -88,5 +88,26 @@ namespace DarwoftMarket.ProjectUtilities
             return input;
 
         }
+        public static DateTime ValidateInputDateTime()
+        {
+            var con = true;
+            var date = DateTime.Parse("01/01/2000");
+            DateTime temp;
+            while (con)
+            {
+                var input = Console.ReadLine();
+                if (DateTime.TryParse(input, out temp))
+                {
+                    date = DateTime.Parse(input);
+                    con = false;
+                }
+                else
+                {
+                    Console.WriteLine("El valor ingresado no es una fecha valida!");
+                }
+            }
+            
+            return date;
+        }
     }
 }
