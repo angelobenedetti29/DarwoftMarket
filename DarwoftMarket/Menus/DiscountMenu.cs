@@ -112,7 +112,7 @@ namespace DarwoftMarket.Menus
                         case 2:
                             Console.WriteLine("Ingresar la nueva descripcion:");
                             var description = ValidatesConsole.ValidateInputString();
-                            DiscountDataAccess.UpdateDiscount(id, (string)discount.Rows[0][1], description, (float)((double)discount.Rows[0][3]), DateTime.Parse((string)discount.Rows[0][4]), DateTime.Parse((string)discount.Rows[0][5]));
+                            DiscountDataAccess.UpdateDiscount(id, (string)discount.Rows[0][1], description, (float)((double)discount.Rows[0][3]), (DateTime)discount.Rows[0][4], (DateTime)discount.Rows[0][5];
 
                             break;
                         case 3:
